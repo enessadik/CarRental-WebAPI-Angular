@@ -1,0 +1,33 @@
+<ul class="list-group">
+  <div class="mb-3">
+    <label for="filterBrandText" class="form-label">Search a Brand!</label>
+    <input
+      type="text"
+      [(ngModel)]="filterBrandText"
+      class="form-control"
+      id="filterBrandText"
+      placeholder="Enter Brand"
+    />
+  </div>
+
+  <li
+    (click)="cleanCurrentBrand()"
+    [class]="getAllBrandClass()"
+    routerLink="/cars"
+  >
+    See All
+  </li>
+  <li class="list-group-item list-group-item-secondary" aria-current="true">
+    Brands
+  </li>
+  <li
+    (click)="setCurrentBrand(brand)"
+    routerLink="/cars/brand/{{ brand.id }}"
+    *ngFor="let brand of brands | filterBrandPipe: filterBrandText"
+    [class]="getCurrentBrandClass(brand)"
+  >
+    {{ brand.brandName }}
+  </li>
+</ul>
+
+<h5 *ngIf="currentBrand">You chooese {{ currentBrand.brandName }} </h5>

@@ -1,0 +1,70 @@
+<div
+  *ngIf="dataLoaded == false"
+  class="spinner-border text-secondary"
+  role="status"
+>
+  <span class="visually-hidden">Loading...</span>
+</div>
+
+<div class="mb-3">
+  <label for="filterText" class="form-label">Search a Car!</label>
+  <input
+    type="text"
+    [(ngModel)]="filterText"
+    class="form-control"
+    id="filterText"
+    placeholder="Search By Car Detail"
+  />
+</div>
+
+<app-filter-car></app-filter-car>
+
+<div *ngIf="filterText.length > 1" class="alert alert-warning">
+  You searched{{ filterText }}
+</div>
+
+<div class="row" *ngIf="dataLoaded == true">
+  <div
+    *ngFor="let car of cars | filterPipe: filterText"
+    class="card col-3"
+    style="width: 30%; margin: 8px"
+  >
+    <img
+      src="{{ carImageBasePath }}{{ getCarImage(car) }}"
+      class="card-img-top"
+      alt="CarImage"
+    />
+    <div class="card-body">
+      <h5 class="card-title">
+        {{ car.brandName | uppercase }} {{ car.carName }}
+      </h5>
+      <p class="card-text">{{ car.description }}</p>
+    </div>
+    <section style="float: inline-end; margin-bottom: 8px">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Model Year : {{ car.modelYear }}</li>
+        <li class="list-group-item">
+          Price : {{ car.dailyPrice | currency }} / day
+        </li>
+        <li class="list-group-item">
+          Taxed Price : {{ car.dailyPrice | vatAdded: 18 | currency }} / day
+        </li>
+        <li class="list-group-item">Color : {{ car.colorName }}</li>
+      </ul>
+      <div class="card-body">
+        <section style="float: right">
+          <button (click)="addToCart(car)" class="btn btn-success">Rent</button>
+        </section>
+        <section style="float: left">
+          <button
+            type="button"
+            routerLink="/cars/cardetail/{{ car.id }}"
+            class="btn btn-secondary"
+          >
+            Details
+          </button>
+        </section>
+      </div>
+    </section>
+  </div>
+</div>

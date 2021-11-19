@@ -1,0 +1,34 @@
+<ul class="list-group">
+  <div class="mb-3">
+    <label for="filterColorText" class="form-label">Search Color!</label>
+    <input
+      type="text"
+      [(ngModel)]="filterColorText"
+      class="form-control"
+      id="filterColorText"
+      placeholder="Enter Color"
+    />
+  </div>
+
+  <li
+    (click)="cleanCurrentColor()"
+    [class]="getAllColorClass()"
+    routerLink="/cars"
+  >
+    See All
+  </li>
+  <li class="list-group-item list-group-item-secondary" aria-current="true">
+    Colors
+  </li>
+  <li
+    (click)="setCurrentColor(color)"
+    routerLink="/cars/color/{{ color.id }}"
+    *ngFor="let color of colors | filterColorPipe: filterColorText"
+    [class]="getCurrentColorClass(color)"
+  >
+    {{ color.colorName }}
+  </li>
+</ul>
+<br />
+
+<h5 *ngIf="currentColor">You choosed {{ currentColor.colorName }}</h5>
