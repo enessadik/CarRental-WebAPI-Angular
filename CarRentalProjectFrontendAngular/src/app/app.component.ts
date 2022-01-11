@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title:string = 'recapproject-frontend';
-  user:string = "Seyit Uçar";
+  user:string = "Enes Sadık";
 }
